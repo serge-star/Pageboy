@@ -37,7 +37,6 @@ public extension PageboyViewController {
 
 // MARK: - VC Updating
 internal extension PageboyViewController {
-    
     func updateViewControllers(to viewControllers: [UIViewController],
                                from fromIndex: PageIndex = 0,
                                to toIndex: PageIndex = 0,
@@ -70,7 +69,7 @@ internal extension PageboyViewController {
         let animateUpdate = animated ? !isUsingCustomTransition : false
         let updateBlock = {
             pageViewController.setViewControllers(viewControllers,
-                                                  direction: direction.layoutNormalized(isRtL: self.view.layoutIsRightToLeft).pageViewControllerNavDirection,
+                                                  direction: direction.layoutNormalized(isRtL: self.contentView.layoutIsRightToLeft).pageViewControllerNavDirection,
                                                   animated: animateUpdate,
                                                   completion:
                 { (finished) in
@@ -105,7 +104,7 @@ internal extension PageboyViewController {
     internal func setUpPageViewController(reloadViewControllers: Bool = true) {
         var existingZIndex: Int?
         if let pageViewController = self.pageViewController { // destroy existing page VC
-            existingZIndex = self.view.subviews.index(of: pageViewController.view)
+            existingZIndex = self.contentView.subviews.index(of: pageViewController.view)
             self.pageViewController?.view.removeFromSuperview()
             self.pageViewController?.removeFromParentViewController()
             self.pageViewController = nil
@@ -120,10 +119,10 @@ internal extension PageboyViewController {
         
         addChildViewController(pageViewController)
         if let existingZIndex = existingZIndex {
-            view.insertSubview(pageViewController.view, at: existingZIndex)
+            self.contentView.insertSubview(pageViewController.view, at: existingZIndex)
         } else {
-            view.addSubview(pageViewController.view)
-            view.sendSubview(toBack: pageViewController.view)
+            self.contentView.addSubview(pageViewController.view)
+            self.contentView.sendSubview(toBack: pageViewController.view)
         }
         pageViewController.view.pinToSuperviewEdges()
         pageViewController.didMove(toParentViewController: self)

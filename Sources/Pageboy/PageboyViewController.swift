@@ -46,6 +46,19 @@ open class PageboyViewController: UIViewController {
     }
     
     // MARK: Properties
+    internal var _contentView: UIView?
+    @IBOutlet public var contentView: UIView! { // swiftlint:disable:this private_outlet
+        get {
+            if self._contentView == nil {
+                self._contentView = nil//self.view
+            }
+            return self._contentView
+        }
+        set {
+            self._contentView = newValue
+            reconfigurePageViewController()
+        }
+    }
     
     internal var pageViewController: UIPageViewController?
     internal var previousPagePosition: CGFloat?

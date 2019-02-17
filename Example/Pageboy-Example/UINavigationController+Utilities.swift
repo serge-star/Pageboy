@@ -10,10 +10,11 @@ import UIKit
 
 extension UINavigationController {
     
-    open override var preferredStatusBarStyle: UIStatusBarStyle {
-        if let rootViewController = self.viewControllers.first {
-            return rootViewController.preferredStatusBarStyle
-        }
-        return super.preferredStatusBarStyle
+    open override var childForStatusBarStyle: UIViewController? {
+        return topViewController
+    }
+    
+    open override var childForStatusBarHidden: UIViewController? {
+        return topViewController
     }
 }
